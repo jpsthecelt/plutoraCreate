@@ -5,7 +5,7 @@ object of type 'system' in Plutora.
 **`IMPLEMENTATION`**
 Programmed in Python, using the requests library, this program
 takes commandline parameters of the form 
-    'python plSystemCreate.py -p username:password -f <mysyscreate.cfg>'
+    'python plSystemCreate.py -p username:password [-f mysyscreate.cfg]'
 
 The user/password parameterws are then used to log into the specific Plutora 
 instance associated with your login.

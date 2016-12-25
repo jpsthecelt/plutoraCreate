@@ -63,7 +63,6 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
     
     # OK; try creating a new system...
     try:
-        fstChildsId = r.json()['childs'][0]['id']
         payload = r"""{
           "Name": "API created System 1",
           "Vendor": "API created vendor",
@@ -135,4 +134,4 @@ if __name__ == '__main__':
 
     createSystem(config_filename, client_id, client_secret, plutora_username, plutora_password)
 
-    print("\n\nWell, it seems we're all done here, boys")
+    print("\n\nWell, it seems we're all done here, boys; time to pack up and go home...")

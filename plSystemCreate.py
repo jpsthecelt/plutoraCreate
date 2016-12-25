@@ -43,7 +43,7 @@ except:
 
 # Setup to obtain Get authorization-token
 authTokenUrl = "https://usoauth.plutora.com/oauth/token"
-payload = 'client_id=' + clientid + '&client_secret=' + clientsecret + '&' + 'grant_type=password&username='
+payload = 'client_id=' + clientid + '&client_secret=' + clientsecret + '&grant_type=password&username='
 payload = payload + PlutoraUsername + '&password=' + PlutoraPassword + '&='
 headers = {
     'content-type': "application/x-www-form-urlencoded",
@@ -60,7 +60,7 @@ if authResponse.status_code != 200:
 else:
     print('\nplSuystemCreate.py - authTokenGet: ')
     pp.pprint(authResponse.json())
-accessToken = authResponse.json()["access_token"]
+    accessToken = authResponse.json()["access_token"]
 
 # Setup to query Maersk Plutora instances
 plutoraBaseUrl= 'https://usapi.plutora.com'
@@ -74,7 +74,7 @@ headers = {
     'postman-token': "bc355474-15d1-1f56-6e35-371b930eac6f"
 }
 
-# Get Plutora information for all system releases, or systems, or just the organization-tree
+# Experiment -- Get Plutora information for all system releases, or systems, or just the organization-tree
 getReleases = '/releases/9d18a2dc-b694-4b20-971f-4944420f4038'
 getSystems = '/systems'
 getOrganizationsTree = '/organizations/tree'

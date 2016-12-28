@@ -84,7 +84,7 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
         print("header: ",headers)
         print("payload: ",payload)
         
-        r = requests.post(plutoraBaseUrl+postSystem, data=json.dumps(payload), headers=headers)
+        r = requests.post(plutoraBaseUrl+postSystem, data=json.loads(payload), headers=headers)
         if r.status_code != 200:
             print('Post new system status code: %i' % r.status_code)
             print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora create system POST]')

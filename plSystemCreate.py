@@ -41,10 +41,10 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
     plutoraMaerskTestUrl = r'https://usapi.plutora.com/me'
     #jiraURL = r'http://localhost:8080/rest/api/2/search?jql=project="DemoRevamp"&expand'
     headers = {
-        'content-type': "application/x-www-form-urlencoded",
-        'authorization': "bearer "+accessToken,
-        'cache-control': "no-cache",
-        'postman-token': "bc355474-15d1-1f56-6e35-371b930eac6f"
+        "content-type": "application/x-www-form-urlencoded",
+        "authorization": "bearer "+accessToken,
+        "cache-control": "no-cache",
+        "postman-token": "bc355474-15d1-1f56-6e35-371b930eac6f"
     }
     
     # Experiment -- Get Plutora information for all system releases, or systems, or just the organization-tree
@@ -60,18 +60,25 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
     else:
         print('\npltSystemCreate.py - Plutora get of organizations information:')
         pp.pprint(r.json())
-    
-    # OK; try creating a new system...
+
+    # Experiment -- Get Plutora information for all hosts
+    getHosts = '/hosts'
+    getOrganizationsTree = '/organizations/tree'
+
+    r = requests.get(plutoraBaseUrl+getHosts, data=payload, headers=headers)
+    if r.status_code != 200:
+        print('Get release status code: %i' % r.status_code)
+        print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora gethosts]')
+        exit('Sorry, unrecoverable error; gotta go...')
+    else:
+        print('\npltSystemCreate.py - Plutora get of hosts information:')
+        pp.pprint(r.json())
+
+# OK; try creating a new system...
     try:
-        payload = r"""{
-          "Name": "API created System 1",
-          "Vendor": "API created vendor",
-          "Status": "Active",
-          "OrganizationId": "%s",
-          "Description": "Description of API created System 1"
-        }""" % r.json()['childs'][0]['id']
-    #"additionalInformation":[],
-        
+        headers["content-type"] = "application/json"
+        payload = """{ "name": "API created System 12", "vendor": "API created vendor", "status": "Active", "organizationId": "%s", "description": "Description of API created System 12" }""" % r.json()['childs'][0]['id']
+
         postSystem = '/systems'
         print("Here's what I'm sending Plutora (headers & payload):")
         print("header: ",headers)
@@ -81,6 +88,7 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
         if r.status_code != 200:
             print('Post new system status code: %i' % r.status_code)
             print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora create system POST]')
+            print("header: ",headers)
             pp.pprint(r.json())
             exit('Sorry, unrecoverable error; gotta go...')
         else:

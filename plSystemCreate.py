@@ -65,14 +65,14 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
     getHosts = '/hosts'
     getOrganizationsTree = '/organizations/tree'
 
-    r = requests.get(plutoraBaseUrl+getHosts, data=payload, headers=headers)
-    if r.status_code != 200:
-        print('Get release status code: %i' % r.status_code)
-        print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora gethosts]')
-        exit('Sorry, unrecoverable error; gotta go...')
-    else:
-        print('\npltSystemCreate.py - Plutora get of hosts information:')
-        pp.pprint(r.json())
+#    r = requests.get(plutoraBaseUrl+getHosts, data=payload, headers=headers)
+#    if r.status_code != 200:
+#        print('Get release status code: %i' % r.status_code)
+#        print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora gethosts]')
+#        exit('Sorry, unrecoverable error; gotta go...')
+#    else:
+#        print('\npltSystemCreate.py - Plutora get of hosts information:')
+#        pp.pprint(r.json())
 
 # OK; try creating a new system...
     try:
@@ -84,7 +84,7 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
         print("header: ",headers)
         print("payload: ",payload)
         
-        r = requests.post(plutoraBaseUrl+postSystem, data=payload, headers=headers)
+        r = requests.post(plutoraBaseUrl+postSystem, data=json.dumps(payload), headers=headers)
         if r.status_code != 200:
             print('Post new system status code: %i' % r.status_code)
             print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora create system POST]')

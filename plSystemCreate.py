@@ -63,29 +63,30 @@ def createSystem(cfgFilename, clientid, clientsecret, PlutoraUsername, PlutoraPa
 
     # Experiment -- Get Plutora information for all hosts
     getHosts = '/hosts'
+    getSystems = '/systems'
     getOrganizationsTree = '/organizations/tree'
 
-#    r = requests.get(plutoraBaseUrl+getHosts, data=payload, headers=headers)
+#    r = requests.get(plutoraBaseUrl+getSystems, data=payload, headers=headers)
 #    if r.status_code != 200:
 #        print('Get release status code: %i' % r.status_code)
-#        print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora gethosts]')
+#        print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora getsystems]')
 #        exit('Sorry, unrecoverable error; gotta go...')
 #    else:
-#        print('\npltSystemCreate.py - Plutora get of hosts information:')
+#        print('\npltSystemCreate.py - Plutora get of systems information:')
 #        pp.pprint(r.json())
 
 # OK; try creating a new system...
     try:
         headers["content-type"] = "application/json"
-        payload = """{ "name": "API created System 12", "vendor": "API created vendor", "status": "Active", "organizationId": "%s", "description": "Description of API created System 12" }""" % r.json()['childs'][0]['id']
+        payload = """{ "additionalInformation": [], "name": "API created System 12", "vendor": "API created vendor", "status": "Active", "organizationId": "%s", "description": "Description of API created System 12" }""" % r.json()['childs'][0]['id']
 
         postSystem = '/systems'
         print("Here's what I'm sending Plutora (headers & payload):")
         print("header: ",headers)
         print("payload: ",payload)
         
-        r = requests.post(plutoraBaseUrl+postSystem, data=json.loads(payload), headers=headers)
-        if r.status_code != 200:
+        r = requests.post(plutoraBaseUrl+postSystem, data=payload, headers=headers)
+        if r.status_code != 201:
             print('Post new system status code: %i' % r.status_code)
             print('\npltSystemCreate.py: too bad sucka! - [failed on Plutora create system POST]')
             print("header: ",headers)
